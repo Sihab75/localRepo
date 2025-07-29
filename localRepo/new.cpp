@@ -7,6 +7,7 @@ int main () {
     cin >> a >> b;
     int sum = a + b;
     int mul = a * b;
+    int sub = a - b;
     cout << sum << endl;
     return 0;
 }
