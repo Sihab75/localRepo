@@ -2,29 +2,41 @@
 #include <vector>
 using namespace std;
 
-int main () {
-    int n, tar;
-    cin >> n >> tar;
-    vector <int> a;
-
+int LinearSearch (int arr[], int n, int tar) {
     for (int i = 0; i < n; i++) {
-        int c;
-        cin >> c;
-        a.push_back(c);
+        if (tar == arr[i]) {
+            return i;
+        }
     }
-    
+    return -1;
+}
+
+int binarySearch(int arr[], int n, int tar) {
     int st = 0, end = n - 1;
     while (st <= end) {
         int mid = st + (end - st) / 2;
-        if (a[mid] == tar) {
-            cout << "found" << endl;
-            return 0;
-        } else if (a[mid] > tar) {
+        if (arr[mid] == tar) {
+            return mid;
+        }
+        if (arr[mid] > tar) {
             end = mid - 1;
         } else {
             st = mid + 1;
         }
     }
-    cout << "not found" << endl;
+    return -1;
+}
+
+int main () {
+    int n, tar;
+    cin >> n >> tar;
+    int arr[n];
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << binarySearch(arr, n, tar);
+    cout << LinearSearch(arr, n, tar);
     return 0;
 }
