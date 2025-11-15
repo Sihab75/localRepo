@@ -36,7 +36,7 @@ int main () {
         cin >> arr[i];
     }
     
-    cout << binarySearch(arr, n, tar);
-    cout << LinearSearch(arr, n, tar);
+    cout << binarySearch(arr, n, tar) << endl;
+    cout << LinearSearch(arr, n, tar) << endl;
     return 0;
 }
