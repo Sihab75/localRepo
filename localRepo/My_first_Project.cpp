@@ -156,8 +156,91 @@ class Route {
     float time;
     float cost;
     int trafficLevel;
+    void push_back (int s, int de, float dis, float timeV, float cos, int traffic) {
+        Route_Node* newNode = new Route_Node (s, de, dis, timeV, cos, traffic);
+        if (!newNode) {
+            return;
+        }
+        if (head == nullptr) {
+            head = newNode;
+            return;
+        }
+        Route_Node* temp = head;
+        while (temp->next != nullptr) {
+            temp = temp->next;
+        }
+        temp->next = head;
+    }
 public:
+    void add_Route (string source, string destination, float dis, float timeV) {
+        Location l;
+        if (dis <= 0 || timeV <=0) {
+            cout << "Error: Distance and time must be positive values!" << endl;
+            return;
+        }
+        int srcIdx = l.find_Location_Index (source);
+        int destIdx = l.find_Location_Index (destination);
+        if (srcIdx == -1 || destIdx == -1) {
+            cout << "Error: Source and destination location not found!" << endl;
+            return;
+        }
+        if (srcIdx == destIdx) {
+            cout << "Error: Source and destination cannot be the same!" << endl;
+            return;
+        }
+        Route_Node* temp = head;
+        while (temp != nullptr) {
+            if (temp->src == srcIdx && temp->dest == destIdx) {
+                cout << "Route from '" << source << "' to '" << destination << "' already exists!" << endl;
+                return;
+            }
+            temp = temp->next;
+        }
+        float cos = dis * 0.5;
+        push_back (srcIdx, destIdx, dis, timeV, cost, 1);
+        Route_Count++;
+        cout << "Route from '" << source << "' to '" << destination << "' added successfully! (Total routes: " << Route_Count << ")" << endl;
+    }
+    void show_All_Routes () {
+        Location l;
+        if (head == nullptr) {
+            cout << "No routes available!" << endl;
+            return;
+        }
+        cout << endl << "=== ALL AVAILABLE ROUTES (" << Route_Count << " total) ===" << endl;
+        Route_Node* temp = head;
+        int i = 1;
+        while (temp != nullptr) {
+            Location_Node* srcLoc = l.get_Location_By_Index (temp->src);
+            Location_Node* destLoc = l.get_Location_By_Index (temp->dest);
+            if (srcLoc && destLoc) {
+                cout << i <<'.' << ' ' << temp->src << "->" << temp->dest << " | Distance: " << temp->distance << " km | Time : " << temp->time << " min | Cost: " << temp->cost << " taka | Traffic: " << temp->traffic_Level << endl;
 
+            } else {
+                cout << i << "(invalid route indices) source = " << temp->src << "destination = " << temp->dest << endl;
+            }
+            temp = temp->next;
+            i++;
+        }
+    }
+    void find_Shortest_Path (sring source, string destination) {
+        Location l;
+        int srcIdx = l.find_Location_Index (source);
+        int destIdx = l.find_Location_Index (destination);
+        if (srcIdx == -1 || destination == -1) {
+            cout << "Error: Source of destination not found!" << endl;
+            return;
+        }
+        if (srcIdx == destIdx) {
+            cout << "Source and destination are same!" << endl;
+            return;
+        }
+        int n = Location_Count;
+        if (n <= 0) {
+            cout << "No location available." << endl;
+            return; 
+        }
+    }
 };
 
 class Hazard{
