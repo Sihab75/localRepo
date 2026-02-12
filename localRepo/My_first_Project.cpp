@@ -56,7 +56,7 @@ struct IndoorNode {
         : building(bld), floor(flr), room(rm), id(i), next(nullptr) {}
 };
 
-// ==================== LOCATION MANAGER ====================
+
 
 class LocationManager {
 private:
@@ -72,7 +72,6 @@ public:
             return;
         }
 
-        // Check for duplicates
         LocationNode* temp = head;
         while (temp != nullptr) {
             if (temp->name == name) {
@@ -82,7 +81,6 @@ public:
             temp = temp->next;
         }
 
-        // Generate random coordinates
         float x = static_cast<float>(rand() % 1000);
         float y = static_cast<float>(rand() % 1000);
 
@@ -190,7 +188,7 @@ public:
 
             string name(nameLen, '\0');
             file.read(&name[0], nameLen);
-            name.pop_back(); // Remove null terminator
+            name.pop_back(); 
 
             float x, y;
             int id;
@@ -1133,18 +1131,15 @@ private:
         locationMgr.addLocation("Sylhet");
         locationMgr.addLocation("Khulna");
 
-        // Add default routes
         routeMgr.addRoute("Dhaka", "Chittagong", 245.5, 5.0);
         routeMgr.addRoute("Dhaka", "Rajshahi", 256.0, 5.5);
         routeMgr.addRoute("Dhaka", "Sylhet", 238.0, 5.2);
         routeMgr.addRoute("Chittagong", "Sylhet", 390.0, 7.0);
 
-        // Set default preferences
         aiAssistant.setPreferences("car", false, true);
         aiAssistant.addFavorite("Dhaka -> Chittagong");
         aiAssistant.addFavorite("Dhaka -> Sylhet");
 
-        // Add some hazards
         safetySys.reportHazard("Dhaka-Chittagong Highway", "construction");
         safetySys.reportHazard("Sylhet City", "flood");
 
